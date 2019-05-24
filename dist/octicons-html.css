@@ -1,0 +1,14 @@
+/*!
+ * Name    : Octicons HTML
+ * Version : 1.0.0
+ * Author  : nK <https://nkdev.info>
+ * GitHub  : https://github.com/nk-o/octicons-html
+ */
+.octicon {
+    display: inline-block;
+    vertical-align: -0.125em;
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+}
