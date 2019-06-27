@@ -107,16 +107,32 @@ window.octicons = {
 // Automatically replace icons.
 window.octicons.replace();
 
+// Fix nodes list for forEach usage in IE11
+function maybeFixIE11ForEach(items) {
+    // IE11 don't support forEach on node items.
+    if (typeof items.forEach === 'undefined') {
+        items = Array.prototype.slice.call(items, 0);
+    }
+
+    return items;
+}
+
 if (window.MutationObserver) {
     new window.MutationObserver((mutationData) => {
         if (!mutationData || !mutationData.length) {
             return;
         }
+
+        mutationData = maybeFixIE11ForEach(mutationData);
+
         mutationData.forEach((items) => {
             if (!items.addedNodes || !items.addedNodes.length) {
                 return;
             }
-            items.addedNodes.forEach((element) => {
+
+            const nodes = maybeFixIE11ForEach(items.addedNodes);
+
+            nodes.forEach((element) => {
                 if (!element.attributes || !element.attributes['data-octicon']) {
                     return;
                 }
