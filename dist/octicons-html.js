@@ -1,6 +1,6 @@
 /*!
  * Name    : Octicons HTML
- * Version : 1.0.0
+ * Version : 1.0.1
  * Author  : nK <https://nkdev.info>
  * GitHub  : https://github.com/nk-o/octicons-html
  */
@@ -122,7 +122,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var defaultAttrs = {
   xmlns: 'http://www.w3.org/2000/svg',
   width: 24,
-  height: 24
+  height: 24,
+  fill: 'currentColor'
 };
 /**
  * Convert attributes object to string of HTML attributes.
@@ -214,7 +215,16 @@ global__WEBPACK_IMPORTED_MODULE_0__["window"].octicons = {
   }
 }; // Automatically replace icons.
 
-global__WEBPACK_IMPORTED_MODULE_0__["window"].octicons.replace();
+global__WEBPACK_IMPORTED_MODULE_0__["window"].octicons.replace(); // Fix nodes list for forEach usage in IE11
+
+function maybeFixIE11ForEach(items) {
+  // IE11 don't support forEach on node items.
+  if (typeof items.forEach === 'undefined') {
+    items = Array.prototype.slice.call(items, 0);
+  }
+
+  return items;
+}
 
 if (global__WEBPACK_IMPORTED_MODULE_0__["window"].MutationObserver) {
   new global__WEBPACK_IMPORTED_MODULE_0__["window"].MutationObserver(function (mutationData) {
@@ -222,12 +232,14 @@ if (global__WEBPACK_IMPORTED_MODULE_0__["window"].MutationObserver) {
       return;
     }
 
+    mutationData = maybeFixIE11ForEach(mutationData);
     mutationData.forEach(function (items) {
       if (!items.addedNodes || !items.addedNodes.length) {
         return;
       }
 
-      items.addedNodes.forEach(function (element) {
+      var nodes = maybeFixIE11ForEach(items.addedNodes);
+      nodes.forEach(function (element) {
         if (!element.attributes || !element.attributes['data-octicon']) {
           return;
         }
