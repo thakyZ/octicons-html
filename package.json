@@ -64,6 +64,6 @@
         "classnames": "^2.2.6",
         "global": "^4.3.2",
         "lite-ready": "^1.0.4",
-        "octicons": "^8.5.0"
+        "octicons": "^11.2.0"
     }
 }
